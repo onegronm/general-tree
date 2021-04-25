@@ -28,7 +28,11 @@ namespace general_tree.tree.factory.abstractFactory
 
         public GeneralTree<T> CreateTree<T>(String type) where T: class
         {
-            return factoryMap[type].getTree<T>();
+            GeneralTreeFactory factory;
+            factoryMap.TryGetValue(type, out factory);
+            GeneralTree<T> tree = factory.getTree<T>();
+
+            return tree;
         }
     }
 }

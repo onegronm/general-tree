@@ -24,35 +24,9 @@ namespace general_tree.tree.factory.concrete
             }
         }
 
-        /**
-         * Invokes the builder with calculation strategies
-         * @return
-         */
-        //public GeneralTree<T> getTree<T>()
-        //{
-        //    try
-        //    {
-        //        TreeBuilder<T> builder = new TreeBuilder<T>();
-
-        //        return
-        //            builder
-        //            .insertWith(Constants.InsertStrategies.ENTITY_INSERT_STRATEGY)
-        //            .deleteWith(Constants.DeleteStrategies.SIMPLE_DELETE_STRATEGY)
-        //            .findWith(Constants.FinderStrategies.ENTITY_FINDER_STRATEGY)
-        //            .traverseWith(IteratorFactory<Entity>.PRE_ORDER)
-        //            .withVisitorCommandFactory(new CalculationVisitorFactory())
-        //            .build();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message + "\n" + e.InnerException + "\n" + e.StackTrace);
-        //    }
-        //    return null;
-        //}
-
         public GeneralTree<T> getTree<T>() where T:class
         {
-            TreeBuilder<Calculation> builder = new TreeBuilder<Calculation>();
+            TreeBuilder<Calculation> builder = new CalculationTreeBuilder();
 
             return
                 (GeneralTree<T>)builder

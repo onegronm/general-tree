@@ -1,6 +1,5 @@
 ﻿using general_tree.model;
 using general_tree.tree.builder;
-using general_tree.tree.factory.abstractFactory;
 using general_tree.tree.iterator;
 using general_tree.tree.visitor;
 using general_tree.tree.visitor.entity;
@@ -33,7 +32,7 @@ namespace general_tree.tree.factory.concrete
             {
                 try
                 {
-                    TreeBuilder<Entity> builder = new TreeBuilder<Entity>();
+                    TreeBuilder<Entity> builder = new EntityTreeBuilder();
 
                     return
                         (GeneralTree<T>)builder
