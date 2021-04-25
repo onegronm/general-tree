@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BBA26E9C-5666-464C-AA57-6A21A9BDCDE5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>general_tree</RootNamespace>
+    <AssemblyName>general-tree</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="model\Calculation.cs" />
+    <Compile Include="model\ChildComponent.cs" />
+    <Compile Include="model\Entity.cs" />
+    <Compile Include="model\Model.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tree\builder\CalculationTreeBuilder.cs" />
+    <Compile Include="tree\builder\EntityTreeBuilder.cs" />
+    <Compile Include="tree\builder\TreeBuilder.cs" />
+    <Compile Include="tree\comparer\CalculationComparer.cs" />
+    <Compile Include="tree\comparer\EntityParentComparer.cs" />
+    <Compile Include="tree\comparer\StringToCalculationComparer.cs" />
+    <Compile Include="tree\comparer\StringToEntityComparer.cs" />
+    <Compile Include="tree\Constants.cs" />
+    <Compile Include="tree\factory\abstract\TreeAbstractFactory.cs" />
+    <Compile Include="tree\factory\concrete\CalculationTreeFactory.cs" />
+    <Compile Include="tree\factory\concrete\EntityLevelOrderFactory.cs" />
+    <Compile Include="tree\factory\concrete\EntityTreeFactory.cs" />
+    <Compile Include="tree\factory\GeneralTreeFactory.cs" />
+    <Compile Include="tree\GeneralTree.cs" />
+    <Compile Include="tree\GeneralTreeImpl.cs" />
+    <Compile Include="tree\iterator\command\LevelOrderCommand.cs" />
+    <Compile Include="tree\iterator\command\PreorderChildrenCommand.cs" />
+    <Compile Include="tree\iterator\command\PreorderCommand.cs" />
+    <Compile Include="tree\comparer\StringToObjectComparer.cs" />
+    <Compile Include="tree\iterator\command\IteratorCommand.cs" />
+    <Compile Include="tree\iterator\IteratorFactory.cs" />
+    <Compile Include="tree\iterator\LevelOrderIterator.cs" />
+    <Compile Include="tree\iterator\PreOrderChildrenIterator.cs" />
+    <Compile Include="tree\iterator\PreOrderIterator.cs" />
+    <Compile Include="tree\node\Node.cs" />
+    <Compile Include="tree\node\NodeImpl.cs" />
+    <Compile Include="tree\strategy\delete\DeleteNodeAndChildrenStrategy.cs" />
+    <Compile Include="tree\strategy\delete\Deleter.cs" />
+    <Compile Include="tree\strategy\find\Finder.cs" />
+    <Compile Include="tree\strategy\find\SimpleFinder.cs" />
+    <Compile Include="tree\strategy\insert\CalculationInserterStrategy.cs" />
+    <Compile Include="tree\strategy\insert\EntityInserterStrategy.cs" />
+    <Compile Include="tree\strategy\insert\Inserter.cs" />
+    <Compile Include="tree\visitor\calculation\CalculationPrintVisitor.cs" />
+    <Compile Include="tree\visitor\entity\EntityPrintVisitor.cs" />
+    <Compile Include="tree\visitor\Visitor.cs" />
+    <Compile Include="tree\visitor\VisitorFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
