@@ -67,8 +67,7 @@ namespace general_tree.tree.builder
             Node<T> root = new NodeImpl<T>(
                     null,
                     null,
-                    null,
-                    iteratorFactory);
+                    null);
 
             GeneralTreeImpl<T> tree = new GeneralTreeImpl<T>(
                     root,

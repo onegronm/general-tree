@@ -26,28 +26,23 @@ namespace general_tree.tree.iterator
 
         public override IEnumerator<Node<T>> GetEnumerator()
         {
-            if (stack.Count == 0)
+            Node<T> node = stack.Peek();
+
+            while (stack.Count > 0)
             {
-                yield break;
-            }
+                node = stack.Pop();
 
-            Node<T> temp = stack.Peek();
-
-            if (stack.Count > 0)
-            {
-                root = stack.Pop();
-
-                if (root.getSibling() != null)
+                if (node.getSibling() != null)
                 {
-                    stack.Push(root.getSibling());
+                    stack.Push(node.getSibling());
                 }
                 else
                 {
                     depth++;
                 }
-            }
 
-            yield return temp;
+                yield return node;
+            }
         }
     }
 }

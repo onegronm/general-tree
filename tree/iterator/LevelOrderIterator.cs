@@ -26,11 +26,6 @@ namespace general_tree.tree.iterator
         {
             Stack<Node<T>> curLevel = levels[level];
 
-            if(curLevel.Count == 0)
-            {
-                yield break;
-            }
-
             Node<T> temp = curLevel.Pop();
 
             // process child nodes for the next level
@@ -51,63 +46,6 @@ namespace general_tree.tree.iterator
         {
             return GetEnumerator();
         }
-
-        /*
-        object IEnumerator.Current
-        {
-            get
-            {
-                return Current;
-            }
-        }
-
-        public Node<T> Current
-        {
-            get
-            {
-                try
-                {
-                    Stack<Node<T>> curLevel = levels[level];
-
-                    Node<T> temp = curLevel.Pop();
-
-                    // process child nodes for the next level
-                    if (temp.getFirstChild() != null)
-                    {
-                        helper(temp.getFirstChild(), level + 1);
-
-                        if (curLevel.Count == 0)
-                        {
-                            level++;
-                        }
-                    }
-
-                    return temp;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message + "\n" + e.InnerException + "\n" + e.StackTrace);
-                    throw e;
-                }
-            }
-        }
-
-        public void Dispose()
-        {
-            
-        }
-
-        public bool MoveNext()
-        {
-            return levels[level].Count > 0;
-        }
-
-        public void Reset()
-        {
-            levels.Clear();
-            level = 0;
-        }
-        */
 
         private void helper(Node<T> node, int level)
         {

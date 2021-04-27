@@ -85,7 +85,9 @@ namespace general_tree.tree
         {
             Visitor<T> visitor = visitorFactory.makeVisitor("print");
 
-            foreach (Node<T> node in this.iterator())
+            IEnumerable<Node<T>> it = this.iterator();
+
+            foreach (Node<T> node in it)
             {
                 node.accept(visitor);
             }

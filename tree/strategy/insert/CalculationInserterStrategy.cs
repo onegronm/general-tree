@@ -1,5 +1,6 @@
 ﻿using general_tree.model;
 using general_tree.tree.comparer;
+using general_tree.tree.iterator;
 using general_tree.tree.node;
 using general_tree.tree.strategy.find;
 using System;
@@ -31,7 +32,7 @@ namespace general_tree.tree.strategy.insert
                 target = root;
             }
 
-            Node<Calculation> newNode = new NodeImpl<Calculation>(target, null, null, value, iteratorFactory);
+            Node<Calculation> newNode = new NodeImpl<Calculation>(target, null, null, value, iterator);
 
             if (value.ChildComponents.Count() > 0)
             {

@@ -25,14 +25,6 @@ namespace general_tree.tree.strategy.find
          */
         public override Node<T> find(T value, Comparer<T> comparer, IEnumerable<Node<T>> iterator)
         {
-            //while (iterator.MoveNext())
-            //{
-            //    Node<T> element = iterator.Current;
-            //    if (comparer.Compare(value, element.value()) == 0)
-            //    {
-            //        return element;
-            //    };
-            //}
             foreach(Node<T> node in iterator)
             {
                 if (comparer.Compare(value, node.value()) == 0)
@@ -51,15 +43,6 @@ namespace general_tree.tree.strategy.find
          */
         public override Node<T> find(String value, IEnumerable<Node<T>> iterator)
         {
-            //while (iterator.MoveNext())
-            //{
-            //    Node<T> element = iterator.Current;
-            //    if (stringToObjectComparator.compare(value, element.value()))
-            //    {
-            //        return element;
-            //    };
-            //}
-
             foreach(Node<T> node in iterator)
             {
                 if (stringToObjectComparator.compare(value, node.value()))

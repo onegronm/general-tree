@@ -2,10 +2,7 @@
 using general_tree.tree.comparer;
 using general_tree.tree.node;
 using general_tree.tree.strategy.find;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.strategy.insert
@@ -27,7 +24,7 @@ namespace general_tree.tree.strategy.insert
                 target = root;
             }
 
-            Node<Entity> newNode = new NodeImpl<Entity>(target, null, null, value, iteratorFactory);
+            Node<Entity> newNode = new NodeImpl<Entity>(target, null, null, value, iterator);
 
             if (target.getFirstChild() == null)
             {

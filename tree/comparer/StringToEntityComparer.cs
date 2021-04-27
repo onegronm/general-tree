@@ -16,11 +16,16 @@ namespace general_tree.tree.comparer
         {
             try
             {
-                int entityId = int.Parse(find);
-                return entityId == e.EntityId ? true : false;
+                if (e != null)
+                {
+                    int entityId = int.Parse(find);
+                    return entityId == e.EntityId ? true : false;
+                }
+                return false;
             }
             catch (Exception ex)
             {
+                Logger.Log(ex);
                 return false;
             }
         }

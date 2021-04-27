@@ -1,10 +1,7 @@
 ﻿using general_tree.tree.iterator;
 using general_tree.tree.visitor;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.node
@@ -21,24 +18,23 @@ namespace general_tree.tree.node
         private Node<T> firstChild;
         private Node<T> nextSibling;
         private T data;
-        private IteratorFactory<T> iteratorFactory;
+        private IEnumerable<Node<T>> iterator;
 
         public NodeImpl(Node<T> parent, Node<T> firstChild, Node<T> nextSibling,
-            T data, IteratorFactory<T> iteratorFactory)
+            T data, IEnumerable<Node<T>> iterator)
         {
             this.parent = parent;
             this.firstChild = firstChild;
             this.nextSibling = nextSibling;
             this.data = data;
-            this.iteratorFactory = iteratorFactory;
+            this.iterator = iterator;
         }
 
-        public NodeImpl(Node<T> parent, Node<T> firstChild, Node<T> nextSibling, IteratorFactory<T> iteratorFactory)
+        public NodeImpl(Node<T> parent, Node<T> firstChild, Node<T> nextSibling)
         {
             this.parent = parent;
             this.firstChild = firstChild;
             this.nextSibling = nextSibling;
-            this.iteratorFactory = iteratorFactory;
         }
 
         public T value()
@@ -173,16 +169,7 @@ namespace general_tree.tree.node
 
         public IEnumerable<Node<T>> children()
         {
-            return iteratorFactory.iterator(this, IteratorFactory<T>.CHILD_PRE_ORDER);
-        }
-
-        /**
-         * Returns a new iterator object whenever it's requested
-         * @return
-         */
-        public IEnumerable<Node<T>> iterator()
-        {
-            return iteratorFactory.iterator(this);
+            throw new NotImplementedException();
         }
     }
 }

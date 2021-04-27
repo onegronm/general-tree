@@ -1,15 +1,12 @@
 ﻿using general_tree.tree.node;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.iterator
 {
     /**
-     * The level order iterator
+     * The pre order iterator
      */
     public class PreOrderIterator<T> : IEnumerable<Node<T>>
     {
@@ -19,6 +16,7 @@ namespace general_tree.tree.iterator
 
         public PreOrderIterator()
         {
+
         }
 
         public PreOrderIterator(Node<T> root)
@@ -29,27 +27,25 @@ namespace general_tree.tree.iterator
 
         public virtual IEnumerator<Node<T>> GetEnumerator()
         {
-            Node<T> temp = stack.Peek();
+            Node<T> node = stack.Peek();
 
-            if (stack.Count == 0)
+            while (stack.Count > 0)
             {
-                yield break;
+                node = stack.Pop();
+
+                if (node.getFirstChild() != null)
+                {
+                    stack.Push(node.getFirstChild());
+                    depth++;
+                }
+
+                if (node.getSibling() != null)
+                {
+                    stack.Push(node.getSibling());
+                }
+
+                yield return node;
             }
-
-            root = stack.Pop();
-
-            if (root.getFirstChild() != null)
-            {
-                stack.Push(root.getFirstChild());
-                depth++;
-            }
-
-            if (root.getSibling() != null)
-            {
-                stack.Push(root.getSibling());
-            }
-
-            yield return temp;
         }
 
         IEnumerator IEnumerable.GetEnumerator()

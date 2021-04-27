@@ -42,15 +42,17 @@ namespace general_tree
             entities.addChild(root);
             entities.setRoot(entities.find("8"));
 
+            
             // Demonstrate printing nodes
             entities.print();
-
+            
             // Demonstrate finding nodes
             Console.WriteLine(entities.find("1").value().EntityName);
             Console.WriteLine(entities.find("3").value().EntityName);
             Console.WriteLine(entities.find("5").value().EntityName);
             Console.WriteLine("\n");
 
+            
             // Demonstrate finding a node and printing its children
             Node<Entity> entity = entities.find("1");
             foreach (Node<Entity> e in entity.children())
@@ -58,7 +60,7 @@ namespace general_tree
                 if (e.value() != null)
                     Console.WriteLine(e.value().EntityName);
             }
-
+            /*
             // Demonstrate deleting a node and its children
             List<Node<Entity>> deletedNodes = entities.delete("1");
             foreach (Node<Entity> node in deletedNodes)
@@ -69,6 +71,9 @@ namespace general_tree
                 }
             }
             Console.WriteLine("\n");
+            */
+
+            Console.Read();
         }
     }
 }
