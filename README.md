@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The purpose of this project is to create a reusable general tree data structure. A general tree is a tree in which each node can have zero or many child nodes. There are many examples of entities with relationships that can be represented by a general tree such as directories, family trees, business entities, geohashes, among many others. Development teams might find themselves writing tree structures from scratch when there's complex parent/child relationships that need to be traversed in a certain order and that require unique operations to be processed for each node. This may lead to tightly coupled solutions with little reusability. This library provides an extensible framework for general trees where the client can mix and match "lego blocks" to generate a tree with the desired functionality for insertion, deletion, location, and many other tasks.
+The purpose of this project is to create a reusable general tree data structure. A general tree is a tree in which each node can have zero or many child nodes. There are many examples of entities with relationships that can be represented by a general tree such as directories, family trees, business entities, geohashes, among many others. Development teams might find themselves writing tree structures from scratch when there's complex parent/child relationships that need to be traversed in a certain order and that require unique operations to be processed for each node. This may lead to tightly coupled solutions with little reusability. This library provides an extensible framework for general trees where the client can combine different strategies to achieve the desired functionality for insertion, deletion, location, and many other tasks.
 
 ## Architecture
 
