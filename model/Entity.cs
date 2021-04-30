@@ -6,7 +6,7 @@ using System.Text;
 
 namespace general_tree.model
 {
-    public class Entity : Model
+    public class Entity : BaseModel
     {
         public int EntityId;
         public String EntityName;

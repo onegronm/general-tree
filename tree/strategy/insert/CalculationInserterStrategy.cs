@@ -1,12 +1,9 @@
 ﻿using general_tree.model;
 using general_tree.tree.comparer;
-using general_tree.tree.iterator;
 using general_tree.tree.node;
 using general_tree.tree.strategy.find;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.strategy.insert
@@ -25,14 +22,14 @@ namespace general_tree.tree.strategy.insert
             this.comparer = new CalculationComparer<Calculation>();
         }
 
-        public override Node<Calculation> add(Node<Calculation> root, Node<Calculation> target, Calculation value, IEnumerable<Node<Calculation>> iterator)
+        public override Node<Calculation> add(Node<Calculation> root, Node<Calculation> target, Calculation value)
         {
             if (target == null)
             {
                 target = root;
             }
 
-            Node<Calculation> newNode = new NodeImpl<Calculation>(target, null, null, value, iterator);
+            Node<Calculation> newNode = new NodeImpl<Calculation>(target, null, null, value);
 
             if (value.ChildComponents.Count() > 0)
             {
@@ -40,10 +37,10 @@ namespace general_tree.tree.strategy.insert
                 // a child node is a calculation that has the parent in its formula
                 foreach (ChildComponent component in value.ChildComponents)
                 {
-                    Node<Calculation> parentNode = finder.find(component.id.ToString(), iterator);
-                    if (parentNode != null && newNode.value().Priority > parentNode.value().Priority)
+                    Node<Calculation> parentCalculation = finder.find(component.id.ToString());
+                    if (parentCalculation != null && newNode.value().Priority > parentCalculation.value().Priority)
                     {
-                        parentNode.insertChild(newNode);
+                        parentCalculation.insertChild(newNode);
                     }
                 }
             }

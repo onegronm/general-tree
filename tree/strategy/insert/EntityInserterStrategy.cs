@@ -17,14 +17,14 @@ namespace general_tree.tree.strategy.insert
             comparer = new EntityParentComparer<Entity>();
         }
 
-        public override Node<Entity> add(Node<Entity> root, Node<Entity> target, Entity value, IEnumerable<Node<Entity>> iterator)
+        public override Node<Entity> add(Node<Entity> root, Node<Entity> target, Entity value)
         {
             if (target == null)
             {
                 target = root;
             }
 
-            Node<Entity> newNode = new NodeImpl<Entity>(target, null, null, value, iterator);
+            Node<Entity> newNode = new NodeImpl<Entity>(target, null, null, value);
 
             if (target.getFirstChild() == null)
             {

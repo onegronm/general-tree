@@ -21,28 +21,35 @@ namespace general_tree.tree
         Node<T> getRoot();
 
         /**
-         * Adds a child node with the supplied comparator
+         * Adds a child node with the supplied comparer
          * @param value
          * @param comparator
          */
-        void addChild(T value, Comparer<T> comparator);
+        void addChild(T value, Comparer<T> comparer);
 
         /**
-         * Adds a child node with the default comparator supplied by the builder
+         * Adds a child node with the default comparer supplied by the builder
          * @param value
          */
         void addChild(T value);
 
         /**
-         * Find a node by a generic value with the supplied comparator
+         * Returns an iterator that returns the immediate children of a node
+         * @param target
+         * @return
+         */
+        IEnumerable<Node<T>> getChildren(Node<T> target);
+
+        /**
+         * Find a node by a generic value with the supplied comparer
          * @param value
          * @param comparator
          * @return
          */
-        Node<T> find(T value, Comparer<T> comparator);
+        Node<T> find(T value, Comparer<T> comparer);
 
         /**
-         * Find a node by a string key with the comparator supplied by the builder
+         * Find a node by a string key with the comparer supplied by the builder
          * @param key
          * @return
          */
@@ -70,7 +77,7 @@ namespace general_tree.tree
          * @param key
          * @return
          */
-        List<Node<T>> delete(String key);
+        List<Node<T>> delete(string key);
 
         /**
          * Delete the supplied node object from the tree. Returns the list of nodes removed
@@ -79,6 +86,9 @@ namespace general_tree.tree
          */
         List<Node<T>> delete(Node<T> target);
 
+        /**
+         * Returns the iterator used to traverse all nodes in the tree with the supplied traversal strategy
+         */
         IEnumerable<Node<T>> iterator();
     }
 }

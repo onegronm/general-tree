@@ -3,11 +3,6 @@ using general_tree.tree.builder;
 using general_tree.tree.iterator;
 using general_tree.tree.visitor;
 using general_tree.tree.visitor.calculation;
-using general_tree.tree.visitor.entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace general_tree.tree.factory.concrete
 {
@@ -30,10 +25,10 @@ namespace general_tree.tree.factory.concrete
 
             return
                 (GeneralTree<T>)builder
-                .insertWith(Constants.InsertStrategies.ENTITY_INSERT_STRATEGY)
+                .traverseWith(IteratorFactory<Calculation>.LEVEL_ORDER)
+                .insertWith(Constants.InsertStrategies.CALCULATION_INSERT_STRATEGY)
                 .deleteWith(Constants.DeleteStrategies.SIMPLE_DELETE_STRATEGY)
-                .findWith(Constants.FinderStrategies.ENTITY_FINDER_STRATEGY)
-                .traverseWith(IteratorFactory<Entity>.PRE_ORDER)
+                .findWith(Constants.FinderStrategies.CALCULATION_FINDER_STRATEGY)
                 .withVisitorCommandFactory(new CalculationVisitorFactory())
                 .build();
         }

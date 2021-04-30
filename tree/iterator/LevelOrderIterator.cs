@@ -1,9 +1,6 @@
 ﻿using general_tree.tree.node;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.iterator
@@ -12,7 +9,7 @@ namespace general_tree.tree.iterator
      * The level order iterator
      */
     public class LevelOrderIterator<T> : IEnumerable<Node<T>> {
-        Node<T> root;
+        readonly Node<T> root;
         int level = 0;
         List<Stack<Node<T>>> levels = new List<Stack<Node<T>>>();
 

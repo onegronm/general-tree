@@ -4,10 +4,6 @@ using general_tree.tree.iterator;
 using general_tree.tree.visitor;
 using general_tree.tree.visitor.entity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace general_tree.tree.factory.concrete
 {
@@ -29,7 +25,7 @@ namespace general_tree.tree.factory.concrete
         {
             try
             {
-                TreeBuilder<Entity> builder = new TreeBuilder<Entity>();
+                TreeBuilder<Entity> builder = new EntityTreeBuilder();
 
                 return
                     (GeneralTree<T>)builder
@@ -42,7 +38,7 @@ namespace general_tree.tree.factory.concrete
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message + "\n" + e.InnerException + "\n" + e.StackTrace);
+                Logger.Log(e);
             }
             return null;
         }

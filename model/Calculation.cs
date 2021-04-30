@@ -6,7 +6,7 @@ using System.Text;
 
 namespace general_tree.model
 {
-    public class Calculation : Model
+    public class Calculation : BaseModel
     {
         public int CalculationId;
         public int Priority;

@@ -16,7 +16,6 @@ namespace general_tree.tree.iterator
 
         public PreOrderIterator()
         {
-
         }
 
         public PreOrderIterator(Node<T> root)

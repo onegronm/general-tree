@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.visitor
 {
     public class VisitorFactory<T>
     {
-        protected Dictionary<String, Visitor<T>> visitorMap 
+        protected Dictionary<string, Visitor<T>> visitorMap 
             = new Dictionary<string, Visitor<T>>();
 
         /**
@@ -16,7 +14,7 @@ namespace general_tree.tree.visitor
          * @param commandRequest
          * @return
          */
-        public Visitor<T> makeVisitor(String commandRequest)
+        public Visitor<T> makeVisitor(string commandRequest)
         {
             Visitor<T> visitor = visitorMap[commandRequest];
             if (visitor != null)

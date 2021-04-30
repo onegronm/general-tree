@@ -4,9 +4,6 @@ using general_tree.tree.iterator;
 using general_tree.tree.visitor;
 using general_tree.tree.visitor.entity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.factory.concrete
@@ -29,25 +26,25 @@ namespace general_tree.tree.factory.concrete
          * @return
          */
         public GeneralTree<T> getTree<T>() where T: class
+        {
+            try
             {
-                try
-                {
-                    TreeBuilder<Entity> builder = new EntityTreeBuilder();
+                TreeBuilder<Entity> builder = new EntityTreeBuilder();
 
-                    return
-                        (GeneralTree<T>)builder
-                        .insertWith(Constants.InsertStrategies.ENTITY_INSERT_STRATEGY)
-                        .deleteWith(Constants.DeleteStrategies.SIMPLE_DELETE_STRATEGY)
-                        .findWith(Constants.FinderStrategies.ENTITY_FINDER_STRATEGY)
-                        .traverseWith(IteratorFactory<Entity>.PRE_ORDER)
-                        .withVisitorCommandFactory(new EntityVisitorFactory())
-                        .build();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message + "\n" + e.InnerException + "\n" + e.StackTrace);
-                }
-                return null;
+                return
+                    (GeneralTree<T>)builder
+                    .traverseWith(IteratorFactory<Entity>.PRE_ORDER)
+                    .insertWith(Constants.InsertStrategies.ENTITY_INSERT_STRATEGY)
+                    .deleteWith(Constants.DeleteStrategies.SIMPLE_DELETE_STRATEGY)
+                    .findWith(Constants.FinderStrategies.ENTITY_FINDER_STRATEGY)                    
+                    .withVisitorCommandFactory(new EntityVisitorFactory())
+                    .build();
             }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+            return null;
+        }
     }
 }

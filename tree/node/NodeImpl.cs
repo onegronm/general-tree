@@ -1,7 +1,4 @@
-﻿using general_tree.tree.iterator;
-using general_tree.tree.visitor;
-using System;
-using System.Collections.Generic;
+﻿using general_tree.tree.visitor;
 
 
 namespace general_tree.tree.node
@@ -18,24 +15,20 @@ namespace general_tree.tree.node
         private Node<T> firstChild;
         private Node<T> nextSibling;
         private T data;
-        private IEnumerable<Node<T>> iterator;
 
-        public NodeImpl(Node<T> parent, Node<T> firstChild, Node<T> nextSibling,
-            T data, IEnumerable<Node<T>> iterator)
+        public NodeImpl(
+            Node<T> parent, 
+            Node<T> firstChild, 
+            Node<T> nextSibling,
+            T data)
         {
             this.parent = parent;
             this.firstChild = firstChild;
             this.nextSibling = nextSibling;
             this.data = data;
-            this.iterator = iterator;
         }
 
-        public NodeImpl(Node<T> parent, Node<T> firstChild, Node<T> nextSibling)
-        {
-            this.parent = parent;
-            this.firstChild = firstChild;
-            this.nextSibling = nextSibling;
-        }
+        public NodeImpl() { }
 
         public T value()
         {
@@ -165,11 +158,6 @@ namespace general_tree.tree.node
                 root = root.getParent();
             }
             return root;
-        }
-
-        public IEnumerable<Node<T>> children()
-        {
-            throw new NotImplementedException();
         }
     }
 }

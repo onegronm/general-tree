@@ -7,8 +7,6 @@ using general_tree.tree.visitor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace general_tree.tree
 {
@@ -17,16 +15,16 @@ namespace general_tree.tree
         Deleter<T> deleter;
         Finder<T> finder;
         Node<T> root;
-        IteratorFactory<T> iteratorFactory;
+        IEnumerable<Node<T>> _iterator;
         VisitorFactory<T> visitorFactory;
 
-        public GeneralTreeImpl(Node<T> root, Inserter<T> inserter, Deleter<T> deleter, Finder<T> finder, IteratorFactory<T> iteratorFactory, VisitorFactory<T> visitorFactory)
+        public GeneralTreeImpl(Node<T> root, Inserter<T> inserter, Deleter<T> deleter, Finder<T> finder, IEnumerable<Node<T>> iterator, VisitorFactory<T> visitorFactory)
         {
             this.inserter = inserter;
             this.deleter = deleter;
             this.finder = finder;
             this.root = root;
-            this.iteratorFactory = iteratorFactory;
+            this._iterator = iterator;
             this.visitorFactory = visitorFactory;
         }
 
@@ -39,12 +37,12 @@ namespace general_tree.tree
         {
             if (newRoot != null)
             {
-                // 1. remove the new root as child of its existing parent
+                // remove the new root as child of its existing parent
                 Node<T> newRootParent = newRoot.getParent();
                 newRootParent.removeChild(newRoot);
                 newRoot.setParent(null);
 
-                // 2. take the existing root and add it as a child of the new root
+                // take the existing root and add it as a child of the new root
                 Node<T> curRoot = this.root;
                 newRoot.insertChild(curRoot.getFirstChild());
                 newRoot.insertChild(curRoot.getSibling());
@@ -55,13 +53,13 @@ namespace general_tree.tree
 
         public void setRoot(T value)
         {
-            Node<T> newRoot = inserter.addNode(root, null, value, this.iterator());
+            Node<T> newRoot = inserter.addNode(root, null, value);
             setRoot(newRoot);
         }
 
-        public Node<T> find(T value, Comparer<T> comparator)
+        public Node<T> find(T value, Comparer<T> comparer)
         {
-            return finder.find(value, comparator, this.iterator());
+            return finder.find(value, comparer, this.iterator());
         }
 
         public Node<T> find(String key)
@@ -69,16 +67,16 @@ namespace general_tree.tree
             return finder.find(key, this.iterator());
         }
 
-        public void addChild(T value, Comparer<T> comparator)
+        public void addChild(T value, Comparer<T> comparer)
         {
-            Node<T> target = find(value, comparator);
-            inserter.addNode(root, target, value, this.iterator());
+            Node<T> target = find(value, comparer);
+            inserter.addNode(root, target, value);
         }
 
         public void addChild(T value)
         {
             Node<T> target = find(value, this.inserter.getComparator());
-            inserter.addNode(root, target, value, this.iterator());
+            inserter.addNode(root, target, value);
         }
 
         public void print()
@@ -116,12 +114,13 @@ namespace general_tree.tree
 
         public void clear()
         {
-            // TO-DO:
+            this.root.setFirstChild(null);
+            this.root.setSibling(null);
         }
 
         public IEnumerable<Node<T>> iterator()
         {
-            return iteratorFactory.iterator(this.root);
+            return this._iterator;
         }
 
         public IEnumerator<Node<T>> GetEnumerator()
@@ -132,6 +131,11 @@ namespace general_tree.tree
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public IEnumerable<Node<T>> getChildren(Node<T> target)
+        {
+            return new PreOrderChildrenIterator<T>(target);
         }
     }
 }

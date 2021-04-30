@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace general_tree.model
 {
-    public class Model
+    public class BaseModel
     {
     }
 }

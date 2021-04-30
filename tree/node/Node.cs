@@ -1,8 +1,4 @@
 ﻿using general_tree.tree.visitor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.node
@@ -21,7 +17,6 @@ namespace general_tree.tree.node
         void insertChild(Node<T> node);
         void insertSibling(Node<T> node);
         void removeChild(Node<T> childToRemove);
-        IEnumerable<Node<T>> children();
         void accept(Visitor<T> visitor);
         Node<T> getRoot();
     }

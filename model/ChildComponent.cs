@@ -6,7 +6,7 @@ using System.Text;
 
 namespace general_tree.model
 {
-    public class ChildComponent : Model
+    public class ChildComponent : BaseModel
     {
         public int id;
     }

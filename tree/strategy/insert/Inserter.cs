@@ -1,27 +1,22 @@
-﻿using general_tree.tree.iterator;
-using general_tree.tree.node;
+﻿using general_tree.tree.node;
 using general_tree.tree.strategy.find;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace general_tree.tree.strategy.insert
 {
     public abstract class Inserter<T>
     {
         protected Finder<T> finder;
-        protected IteratorFactory<T> iteratorFactory;
 
         public Inserter(Finder<T> finder)
         {
             this.finder = finder;
         }
 
-        public Node<T> addNode(Node<T> root, Node<T> target, T value, IEnumerable<Node<T>> iterator)
+        public Node<T> addNode(Node<T> root, Node<T> target, T value)
         {
             preProcessor();
-            Node<T> node = add(root, target, value, iterator);
+            Node<T> node = add(root, target, value);
             postProcessor();
             return node;
         }
@@ -45,6 +40,6 @@ namespace general_tree.tree.strategy.insert
         }
 
         public abstract Comparer<T> getComparator();
-        public abstract Node<T> add(Node<T> root, Node<T> target, T value, IEnumerable<Node<T>> iterator);
+        public abstract Node<T> add(Node<T> root, Node<T> target, T value);
     }
 }

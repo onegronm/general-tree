@@ -1,6 +1,4 @@
-﻿using general_tree.model;
-using general_tree.tree.comparer;
-using general_tree.tree.iterator;
+﻿using general_tree.tree.iterator;
 using general_tree.tree.node;
 using general_tree.tree.strategy.delete;
 using general_tree.tree.strategy.find;
@@ -8,43 +6,47 @@ using general_tree.tree.strategy.insert;
 using general_tree.tree.visitor;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace general_tree.tree.builder
 {
-    public class TreeBuilder<T>
+    public abstract class TreeBuilder<T>
     {
+        protected string insertRequest;
+        protected string deleteRequest;
+        protected string findRequest;
+        protected string traverseRequest;
         protected Inserter<T> inserter;
         protected Deleter<T> deleter;
         protected Finder<T> finder;
-        protected String traversalRequest;
         protected VisitorFactory<T> visitorFactory;
-        protected Dictionary<String, Deleter<T>> deleterMap = new Dictionary<String, Deleter<T>>();
-        protected Dictionary<String, Finder<T>> finderMap = new Dictionary<String, Finder<T>>();
-        protected Dictionary<String, Inserter<T>> inserterMap = new Dictionary<String, Inserter<T>>();
+        protected IteratorFactory<T> iteratorFactory = new IteratorFactory<T>();
+        protected Dictionary<string, Deleter<T>> deleterMap = new Dictionary<string, Deleter<T>>();
+        protected Dictionary<string, Finder<T>> finderMap = new Dictionary<string, Finder<T>>();
+        protected Dictionary<string, Inserter<T>> inserterMap = new Dictionary<string, Inserter<T>>();
+        protected Node<T> root = new NodeImpl<T>();
 
-        public TreeBuilder<T> insertWith(String insertRequest)
+        public TreeBuilder<T> insertWith(string insertRequest)
         {
-            this.inserter = inserterMap[insertRequest];
+            this.insertRequest = insertRequest;
             return this;
         }
 
-        public TreeBuilder<T> deleteWith(String deleteRequest)
+        public TreeBuilder<T> deleteWith(string deleteRequest)
         {
-            this.deleter = deleterMap[deleteRequest];
+            this.deleteRequest = deleteRequest;
             return this;
         }
 
-        public TreeBuilder<T> traverseWith(String traversalRequest)
+        public TreeBuilder<T> traverseWith(string traversalRequest)
         {
-            this.traversalRequest = traversalRequest;
+            this.traverseRequest = traversalRequest;
+            this.iteratorFactory.setDefaultOrder(traversalRequest);
             return this;
         }
 
-        public TreeBuilder<T> findWith(String findRequest)
+        public TreeBuilder<T> findWith(string findRequest)
         {
-            this.finder = finderMap[findRequest];
+            this.findRequest = findRequest;
             return this;
         }
 
@@ -56,29 +58,26 @@ namespace general_tree.tree.builder
         
         public GeneralTree<T> build()
         {
-            if (this.inserter == null){ throw new Exception("Missing inserter strategy."); }
-            if (this.deleter == null){ throw new Exception("Missing delete strategy."); }
-            if (this.finder == null){ throw new Exception("Missing finder strategy."); }
-            if (this.traversalRequest == null){ throw new Exception("Missing traversal strategy."); }
-            if (this.visitorFactory == null){ throw new Exception("Missing visitor factory."); }
+            setStrategies();
 
-            IteratorFactory<T> iteratorFactory = new IteratorFactory<T>(traversalRequest);
-
-            Node<T> root = new NodeImpl<T>(
-                    null,
-                    null,
-                    null);
+            if (this.inserter == null) { throw new Exception("Missing inserter strategy."); }
+            if (this.deleter == null) { throw new Exception("Missing delete strategy."); }
+            if (this.finder == null) { throw new Exception("Missing finder strategy."); }
+            if (this.traverseRequest == null) { throw new Exception("Missing traversal strategy."); }
+            if (this.visitorFactory == null) { throw new Exception("Missing visitor factory."); }
 
             GeneralTreeImpl<T> tree = new GeneralTreeImpl<T>(
                     root,
                     inserter,
                     deleter,
                     finder,
-                    iteratorFactory,
+                    iteratorFactory.iterator(root, this.traverseRequest),
                     visitorFactory
                     );
 
             return tree;
         }
+
+        public abstract void setStrategies();
     }
 }

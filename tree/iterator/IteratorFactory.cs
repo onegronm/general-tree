@@ -2,28 +2,29 @@
 using general_tree.tree.node;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace general_tree.tree.iterator
 {
     public class IteratorFactory<T>
     {
-        public readonly static String PRE_ORDER = "pre-order";
-        public readonly static String CHILD_PRE_ORDER = "child-pre-order";
-        public readonly static String LEVEL_ORDER = "level-order";
+        public readonly static string PRE_ORDER = "pre-order";
+        public readonly static string CHILD_PRE_ORDER = "child-pre-order";
+        public readonly static string LEVEL_ORDER = "level-order";
 
-        private Dictionary<String, IteratorCommand<T>> iteratorMap = new Dictionary<string, IteratorCommand<T>>();
-        private String defaultOrder;
+        private Dictionary<string, IteratorCommand<T>> iteratorMap = new Dictionary<string, IteratorCommand<T>>();
+        private string defaultOrder;
 
-        public IteratorFactory(String defaultOrder)
+        public IteratorFactory()
         {
-            this.defaultOrder = defaultOrder;
-
             iteratorMap[LEVEL_ORDER] = new LevelOrderCommand<T>();
             iteratorMap[PRE_ORDER] = new PreorderCommand<T>();
             iteratorMap[CHILD_PRE_ORDER] = new PreorderChildrenCommand<T>();
+        }
+
+        public void setDefaultOrder(string request)
+        {
+            this.defaultOrder = request;
         }
 
         /**
