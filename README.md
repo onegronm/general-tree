@@ -30,26 +30,29 @@ Uses the visitor, iterator, and bridge patterns to support operations that are u
 ## How to use it
 The application can be tested simply by running it as a command line tool or through the debugger in Eclipse or IntelliJ. In order to extend this library, complete the following steps:
 
-1. If you want to implement new strategies, do this by extending the Finder, Deleter, and Inserter abstract classes in the 'strategy' package.
+1. If you want to implement new strategies, do this by extending the Finder, Deleter, and Inserter abstract classes in the 'strategy' namespace.
 ```java
-public class EntityHierarchyInserterStrategy<T extends EntityHierarchy> extends Inserter<T> {
+public class EntityInserterStrategy<T> : Inserter<Entity>
+{
+    Comparer<Entity> comparer;
 
-    Comparator<T> comparator;
-
-    public EntityHierarchyInserterStrategy(Finder finder) {
-        super(finder);
-        this.comparator = new ParentComparator<>();
+    public EntityInserterStrategy(Finder<Entity> finder)
+        :base(finder)
+    {
+        comparer = new EntityParentComparer<Entity>();
     }
 
-    @Override
-    public Node<T> add(Node<T> root, Node<T> target, T value, Iterator<Node<T>> iterator) {
-        if (target == null){
+    public override Node<Entity> add(Node<Entity> root, Node<Entity> target, Entity value)
+    {
+        if (target == null)
+        {
             target = root;
         }
 
-        Node<T> newNode = new NodeImpl<>(target, null, null, value, iteratorFactory);
+        Node<Entity> newNode = new NodeImpl<Entity>(target, null, null, value);
 
-        if (target.getFirstChild() == null) {
+        if (target.getFirstChild() == null)
+        {
             target.insertChild(newNode);
         }
         else
@@ -57,121 +60,120 @@ public class EntityHierarchyInserterStrategy<T extends EntityHierarchy> extends 
 
         return newNode;
     }
+}
 ```
 
-2. If you want to implement new iterators, do this by extending Iterator<Node<T>> and updating the iterator factory in the 'iterator' package.
-
+2. If you want to implement new iterators, do this by extending Iterator<Node<T>> and updating the iterator factory in the 'iterator'.
 ```java
-public class LevelOrderIterator implements Iterator<Node> {
-    Node root;
-    int level = 0;
-    List<Stack<Node>> levels = new ArrayList<>();
+public class PreOrderIterator<T> : IEnumerable<Node<T>>
+{
+    protected Node<T> root;
+    protected int depth = 0;
+    protected Stack<Node<T>> stack = new Stack<Node<T>>();
 
-    public LevelOrderIterator(Node root){
+    public PreOrderIterator()
+    {
+    }
+
+    public PreOrderIterator(Node<T> root)
+    {
         this.root = root;
-        helper(this.root, level);
+        stack.Push(this.root);
     }
 
-    @Override
-    public boolean hasNext() {
-        return !levels.get(level).isEmpty();
-    }
-
-    @Override
-    public Node next() {
-        Stack<Node> curLevel = levels.get(level);
-
-        Node temp = curLevel.pop();
-
-        // process child nodes for the next level
-        if (temp.getFirstChild() != null) {
-            helper(temp.getFirstChild(), level+1);
-
-            if (curLevel.isEmpty()) {
-                level++;
-            }
-        }
-
-        return temp;
+    public virtual IEnumerator<Node<T>> GetEnumerator()
+    {
+        // ...
     }
 ```
 
-3. Create the comparators used to locate nodes in the tree. The comparator must extend Comparator<T> and override the compare(T 1, T2) method. You can also create a comparator by extending StringToObjectComparator<T> which allows locating a node of type T using a string key.
-
+3. Create the comparers used to locate nodes in the tree. The comparer must implement Comparer<T>. You can also create a comparer by extending StringToObjectComparer<T> which allows comparing a node of type T with a string value.
 ```java
-public class CompareStringToToEntityId implements StringToObjectComparator<EntityHierarchy> {
-
-    public boolean compare(String find, EntityHierarchy e) {
-        try {
-            Integer entityId = Integer.parseInt(find);
-            return entityId == e.EntityId ? true : false;
-        } catch (Exception ex) {
+public class StringToCalculationComparer : StringToObjectComparer<Calculation> 
+{
+    public bool compare(String key, Calculation c)
+    {
+        try
+        {
+            int calculationId = int.Parse(key);
+            return calculationId == c.CalculationId ? true : false;
+        }
+        catch (Exception ex)
+        {
+            Logger.Log(ex);
             return false;
         }
     }
 }
 ```
 
-4. Define visitors for your general tree in the 'visitor' package. The visitors define operations supported on each node of type T.
-
+4. Define visitors for your general tree in the 'visitor' namespace. The visitors define operations supported on each node of type T.
 ```java
-public class PrintVisitor implements Visitor<EntityHierarchy> {
+public class EntityPrintVisitor : Visitor<Entity> {
     public StringBuilder sb;
 
-    public PrintVisitor() {
+    public EntityPrintVisitor()
+    {
         sb = new StringBuilder();
     }
 
-    @Override
-    public void visit(Node<EntityHierarchy> node) {
-        EntityHierarchy entity = node.value();
-        if (entity != null) {
-            System.out.println("EntityId: " + entity.EntityId + ", Name: " + entity.EntityName + ", ParentId: " + entity.ParentId);
+    public void visit(Node<Entity> node)
+    {
+        Entity entity = node.value();
+        if (entity != null)
+        {
+            Console.WriteLine("EntityId: " + entity.EntityId + ", Name: " + entity.EntityName + ", ParentId: " + entity.ParentId);
         }
     }
 }
 ```
 
 5. Create a concrete factory in the factory.concrete package. This factory will contain the builder where the different strategies are determined. The builder within the factory method will return the abstract tree upon calling build(). You may use any of the existing strategies or code new ones.
-
-6. Create the visitor factory inside of the tree factory above. All the visitor factory does is store a map with a command as a key (e.g., "print") and the visitor implementation as the value.
-
 ```java
-public class EntityHierarchyFactory implements GeneralTreeFactory {
-    public static class EntityVisitorFactory extends VisitorFactory {
-        public EntityVisitorFactory() {
-            super();
-            visitorMap.put("print", new PrintVisitor());
-        }
-    }
-
+public class EntityTreeFactory : GeneralTreeFactory
+{
     /**
-     * Invokes the builder with entity strategies
-     * @return
-     */
-    @Override
-    public GeneralTree<EntityHierarchy> getTree() {
-        try {
-            TreeBuilder<EntityHierarchy> builder = new TreeBuilder<>();
+        * Invokes the builder with entity strategies
+        * @return
+        */
+    public GeneralTree<T> getTree<T>() where T: class
+    {
+        try
+        {
+            TreeBuilder<Entity> builder = new EntityTreeBuilder();
 
             return
-                    builder
-                            .insertWith(Constants.InsertStrategies.ENTITY_INSERT_STRATEGY)
-                            .deleteWith(Constants.DeleteStrategies.SIMPLE_DELETE_STRATEGY)
-                            .findWith(Constants.FinderStrategies.ENTITY_FINDER_STRATEGY)
-                            .traverseWith(IteratorFactory.PRE_ORDER)
-                            .withVisitorCommandFactory(new EntityVisitorFactory())
-                            .build();
-        } catch (Exception e) {
-            e.printStackTrace();
+                (GeneralTree<T>)builder
+                .traverseWith(IteratorFactory<Entity>.PRE_ORDER)
+                .insertWith(Constants.InsertStrategies.ENTITY_INSERT_STRATEGY)
+                .deleteWith(Constants.DeleteStrategies.SIMPLE_DELETE_STRATEGY)
+                .findWith(Constants.FinderStrategies.ENTITY_FINDER_STRATEGY)                    
+                .withVisitorCommandFactory(new EntityVisitorFactory())
+                .build();
+        }
+        catch (Exception e)
+        {
+            Logger.Log(e);
         }
         return null;
     }
 }
 ```
 
-7. Update the GeneralTreeAbstractFactory map with the factory created above.
+6. Create the visitor factory inside of the tree factory above. All the visitor factory does is store a map with a command as a key (e.g., "print") and the visitor implementation as the value.
+```java
+public class EntityTreeFactory : GeneralTreeFactory
+{
+    private class EntityVisitorFactory : VisitorFactory<Entity>
+    {
+        public EntityVisitorFactory() : base()
+        {
+            visitorMap["print"] = new EntityPrintVisitor();
+        }
+    }
+```
 
+7. Update the GeneralTreeAbstractFactory map with the factory created above.
 ```java
 public abstract class GeneralTreeAbstractFactory {
     public final static String ENTITY_HIERARCHY = "Entity Hierarchy General Tree";
@@ -194,10 +196,10 @@ public abstract class GeneralTreeAbstractFactory {
 ```
 
 8. In the client application, instantiate and perform operations on the tree:
-
 ```java
-GeneralTreeAbstractFactory treeAbsFactory = new MyConcreteGeneralTreeFactory();
-GeneralTree<COMPLEX_TYPE> myTree = treeAbsFactory.CreateTree();
-myTree.addChild(new COMPLEX_TYPE())
-...
+TreeAbstractFactory treeAbsFactory = new TreeAbstractFactory();
+GeneralTree<Entity> entities = treeAbsFactory.CreateTree<Entity>(TreeAbstractFactory.ENTITY_PRE_ORDER);
+
+entities.addChild(new Entity(1, "Test Entity 1", -1));
+// ...
 ```
