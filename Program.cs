@@ -75,12 +75,12 @@ namespace general_tree
              */
             GeneralTree<Calculation> calcTree = treeAbsFactory.CreateTree<Calculation>(TreeAbstractFactory.CALCULATION);
 
-            List<Calculation> calcs = new List<Calculation>();
             try
             {
                 string filePath = "C:\\Data\\Code\\repos\\onegronm\\general-tree\\calculations.json";
                 using (StreamReader r = new StreamReader(filePath))
                 {
+                    List<Calculation> calcs = new List<Calculation>();
                     string json = r.ReadToEnd();
                     calcs = JsonConvert.DeserializeObject<List<Calculation>>(json);
                     foreach(Calculation c in calcs)

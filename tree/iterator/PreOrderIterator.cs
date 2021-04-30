@@ -26,6 +26,9 @@ namespace general_tree.tree.iterator
 
         public virtual IEnumerator<Node<T>> GetEnumerator()
         {
+            stack.Clear();
+            stack.Push(this.root);
+
             Node<T> node = stack.Peek();
 
             while (stack.Count > 0)

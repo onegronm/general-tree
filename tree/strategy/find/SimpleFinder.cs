@@ -27,7 +27,7 @@ namespace general_tree.tree.strategy.find
         {
             foreach (Node<T> node in iterator)
             {
-                if (stringToObjectComparator.compare(key, node.value()))
+                if (node.value() != null && stringToObjectComparator.compare(key, node.value()))
                 {
                     return node;
                 };

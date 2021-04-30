@@ -21,22 +21,32 @@ namespace general_tree.tree.iterator
 
         public IEnumerator<Node<T>> GetEnumerator()
         {
-            Stack<Node<T>> curLevel = levels[level];
+            levels.Clear();
+            level = 0;
 
-            Node<T> temp = curLevel.Pop();
+            helper(this.root, level);
 
-            // process child nodes for the next level
-            if (temp.getFirstChild() != null)
+            while (levels.Count > 0)
             {
-                helper(temp.getFirstChild(), level + 1);
+                Stack<Node<T>> curLevel = levels[level];
 
-                if (curLevel.Count == 0)
+                if (curLevel.Count == 0) yield break;
+
+                Node<T> temp = curLevel.Pop();
+
+                // process child nodes for the next level
+                if (temp.getFirstChild() != null)
                 {
-                    level++;
-                }
-            }
+                    helper(temp.getFirstChild(), level + 1);
 
-            yield return temp;
+                    if (curLevel.Count == 0)
+                    {
+                        level++;
+                    }
+                }
+
+                yield return temp;
+            }            
         }
 
         IEnumerator IEnumerable.GetEnumerator()
