@@ -12,23 +12,20 @@ Contains the abstract factory or the "factory of factories" responsible for crea
 ### tree.builder
 The builder responsible for creating the implementation of the General Tree with the given strategies for inserting, deleting, traversing, finding, and visiting nodes.
 
-### tree.comparator
-This package contains the different comparators used for locating nodes in the general tree. Each comparator typically maps to the primary key of the concrete type belonging to the tree.
-
-### tree.iterable
-A facade that attaches a node to an iterator. This allows the client code to easily traverse the children of any node in the tree.
+### tree.comparer
+This namespace contains the different comparers used for locating nodes in the general tree. Each comparer typically maps to the primary key of the concrete type belonging to the tree.
 
 ### tree.iterator
-This package contains the implementations for the iterators supporting the different traversal methods in the tree. Only pre-order and level-order are implemented. The IteratorFactory uses the command pattern to return the instance of the iterator when executing the iterator command.
+This namespace contains the implementations for the iterators supporting the different traversal methods in the tree. Only pre-order, children only, and level-order are implemented. The IteratorFactory uses the command pattern to return the instance of the iterator when executing the iterator command.
 
 ### tree.node
-Contains the interface and implementation of the general tree using first child/next sibling representation.
+Contains the interface and implementation of the general tree using the first child/next sibling representation.
 
 ### tree.strategy
-Contains the implementations of the strategies for inserting, finding, and deleting nodes. Each strategy subclasses from one of the abstract base classes (Inserter, Finder, and Deleter). The abstract classes contain the preProcessor() and postProcessor() hook methods for implementing additional validation of the strategy operations.
+Contains the implementations of the strategies for inserting, finding, and deleting nodes. Each strategy is subclassed from one of the abstract base classes (Inserter, Finder, and Deleter). The abstract classes contain the preProcessor() and postProcessor() hook methods for implementing additional validation of the strategy operations.
 
 ### tree.visitor
-Uses the visitor, iterator, and bridge patterns to support operations that are unique to the concrete type of the tree in a loosely coupled manner while respecting the traversal order requested by the client. Currently, only print visitors are implemented but this could be expanded to support any operation with more visitors.
+Uses the visitor, iterator, and bridge patterns to support operations that are unique to the concrete type of the tree in a loosely coupled manner while respecting the traversal order requested by the client. Currently, only print visitors are implemented but this could be expanded to support any operation needed on the nodes.
 
 ## How to use it
 The application can be tested simply by running it as a command line tool or through the debugger in Eclipse or IntelliJ. In order to extend this library, complete the following steps:
