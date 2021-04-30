@@ -67,6 +67,7 @@ namespace general_tree
                     Console.WriteLine(node.value().EntityName);
                 }
             }
+
             Console.WriteLine("\n");
 
             /**

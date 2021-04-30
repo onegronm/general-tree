@@ -1,4 +1,4 @@
-﻿# Final Project
+﻿# Generic General Tree
 
 ## Purpose
 
@@ -204,8 +204,3 @@ GeneralTree<COMPLEX_TYPE> myTree = treeAbsFactory.CreateTree();
 myTree.addChild(new COMPLEX_TYPE())
 ...
 ```
-
-
-
-## Interesting challenges and key takeaways
-The most challenging aspect of this project was finding a way to incorporate the different patterns in the most elegant way possible to achieve the modularity, loose coupling, and reusability desired. At the start of the project, I put together a list of patterns I wanted to use understanding how they would help me achieve my objective but it was challenging to translate those into code. I overcame this challenge by reviewing lecture notes, sample code, and by keeping in mind the goal to create a tree data structure that could be configurable and reusable. I was surprised at how easy it was to implement the first child next sibling tree structure as I only had to deal with two pointers. This really speaks to the simplicity this data structure can bring to the code. 
