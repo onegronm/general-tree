@@ -63,7 +63,7 @@ public class EntityInserterStrategy<T> : Inserter<Entity>
 }
 ```
 
-2. If you want to implement new iterators, do this by extending Iterator<Node<T>> and updating the iterator factory in the 'iterator'.
+2. If you want to implement new iterators, do this by extending IEnumerable<Node<T>> and updating the iterator factory in the 'iterator' namespace.
 ```java
 public class PreOrderIterator<T> : IEnumerable<Node<T>>
 {
@@ -107,7 +107,7 @@ public class StringToCalculationComparer : StringToObjectComparer<Calculation>
 }
 ```
 
-4. Define visitors for your general tree in the 'visitor' namespace. The visitors define operations supported on each node of type T.
+4. Define visitors for your general tree in the 'visitor' namespace. The visitors define operations on node<T>.
 ```java
 public class EntityPrintVisitor : Visitor<Entity> {
     public StringBuilder sb;
@@ -128,7 +128,7 @@ public class EntityPrintVisitor : Visitor<Entity> {
 }
 ```
 
-5. Create a concrete factory in the factory.concrete package. This factory will contain the builder where the different strategies are determined. The builder within the factory method will return the abstract tree upon calling build(). You may use any of the existing strategies or code new ones.
+5. Create a concrete factory in the factory.concrete namespace. This factory will contain the builder where the different strategies are declared. The builder within the factory method will return the abstract tree upon calling build(). You may use any of the existing strategies or make new ones.
 ```java
 public class EntityTreeFactory : GeneralTreeFactory
 {
