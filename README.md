@@ -28,7 +28,7 @@ Contains the implementations of the strategies for inserting, finding, and delet
 Uses the visitor, iterator, and bridge patterns to support operations that are unique to the concrete type of the tree in a loosely coupled manner while respecting the traversal order requested by the client. Currently, only print visitors are implemented but this could be expanded to support any operation needed on the nodes.
 
 ## How to use it
-The application can be tested simply by running it as a command line tool or through the debugger in Eclipse or IntelliJ. In order to extend this library, complete the following steps:
+The application can be tested simply by running it as a command line tool or through the debugger in Visual Studio. In order to extend this library, complete the following steps:
 
 1. If you want to implement new strategies, do this by extending the Finder, Deleter, and Inserter abstract classes in the 'strategy' namespace.
 ```java
