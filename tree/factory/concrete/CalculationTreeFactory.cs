@@ -11,14 +11,6 @@ namespace general_tree.tree.factory.concrete
      */
     public class CalculationTreeFactory : GeneralTreeFactory
     {
-        private class CalculationVisitorFactory : VisitorFactory<Calculation>
-        {
-            public CalculationVisitorFactory() : base()
-            {
-                visitorMap["print"] = new CalculationPrintVisitor();
-            }
-        }
-
         public GeneralTree<T> getTree<T>() where T:class
         {
             TreeBuilder<Calculation> builder = new CalculationTreeBuilder();

@@ -87,6 +87,7 @@
     <Compile Include="tree\strategy\insert\EntityInserterStrategy.cs" />
     <Compile Include="tree\strategy\insert\Inserter.cs" />
     <Compile Include="tree\visitor\calculation\CalculationPrintVisitor.cs" />
+    <Compile Include="tree\visitor\calculation\CalculationVisitorFactory.cs" />
     <Compile Include="tree\visitor\entity\EntityPrintVisitor.cs" />
     <Compile Include="tree\visitor\Visitor.cs" />
     <Compile Include="tree\visitor\VisitorFactory.cs" />

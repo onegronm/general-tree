@@ -58,13 +58,14 @@ namespace general_tree.tree.builder
         
         public GeneralTree<T> build()
         {
+            if (this.traverseRequest == null) { throw new Exception("Missing traversal strategy."); }
+            if (this.visitorFactory == null) { throw new Exception("Missing visitor factory."); }
+
             setStrategies();
 
             if (this.inserter == null) { throw new Exception("Missing inserter strategy."); }
             if (this.deleter == null) { throw new Exception("Missing delete strategy."); }
             if (this.finder == null) { throw new Exception("Missing finder strategy."); }
-            if (this.traverseRequest == null) { throw new Exception("Missing traversal strategy."); }
-            if (this.visitorFactory == null) { throw new Exception("Missing visitor factory."); }
 
             GeneralTreeImpl<T> tree = new GeneralTreeImpl<T>(
                     root,
